@@ -80,6 +80,7 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		//CreatWindowExA - ANSI cod
 		//CreatWindowExW - Wide (Unicod)
+
 		HWND hStatic = CreateWindowEx
 		(
 			0,
