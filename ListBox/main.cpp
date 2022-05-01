@@ -47,7 +47,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			break;
 		case IDADD_BUTTON:
 			{
-			DialogBoxParam(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG2), 0, DlgProc1, 0);		
+			DialogBoxParam(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG2), hwnd, DlgProc1, 0);		
 					
 			}			
 			break;
@@ -74,9 +74,6 @@ BOOL CALLBACK DlgProc1(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_INITDIALOG:
 		{
-			HWND hEditBox = GetDlgItem(hwnd, IDC_EDIT1);
-			CONST INT SIZE = 256;
-			CHAR sz_buffer[SIZE] = {};
 		}
 		break;
 	case WM_COMMAND:
@@ -84,7 +81,15 @@ BOOL CALLBACK DlgProc1(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 		case IDOK_INPUT:
 			{
-			
+			HWND hEditBox = GetDlgItem(hwnd, IDC_EDIT1);
+			CONST INT SIZE = 256;
+			CHAR sz_buffer[SIZE] = {};
+			SendMessage(hEditBox, WM_GETTEXT, SIZE, (LPARAM)sz_buffer);
+			HWND hParent = GetParent(hwnd);
+			HWND hList = GetDlgItem(hParent, IDC_LIST1);
+			if(strlen(sz_buffer))
+				SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)sz_buffer);
+			EndDialog(hwnd, 0);
 			
 			}
 			break;
