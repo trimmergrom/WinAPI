@@ -81,19 +81,19 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		//CreatWindowExA - ANSI cod
 		//CreatWindowExW - Wide (Unicod)
 
-		HWND hStatic = CreateWindowEx
-		(
-			0,
-			"Static",
-			"This static string will view size of window and psition window",
-			WS_CHILD | WS_VISIBLE,
-			10, 10,
-			500, 50,
-			hwnd,
-			(HMENU)IDC_STATIC,
-			GetModuleHandle(NULL), //return hInstance
-			0
-		);
+		//HWND hStatic = CreateWindowEx
+		//(
+		//	0,
+		//	"Static",
+		//	"This static string will view size of window and psition window",
+		//	WS_CHILD | WS_VISIBLE,
+		//	10, 10,
+		//	500, 50,
+		//	hwnd,
+		//	(HMENU)IDC_STATIC,
+		//	GetModuleHandle(NULL), //return hInstance
+		//	0
+		//);
 	}
 		break;
 	case WM_COMMAND:break;
