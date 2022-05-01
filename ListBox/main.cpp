@@ -89,8 +89,7 @@ BOOL CALLBACK DlgProc1(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			HWND hList = GetDlgItem(hParent, IDC_LIST1);
 			if(strlen(sz_buffer))
 				SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)sz_buffer);
-			EndDialog(hwnd, 0);
-			
+			EndDialog(hwnd, 0);		
 			}
 			break;
 		case IDCANCEL_INPUT:EndDialog(hwnd, 0); break;
