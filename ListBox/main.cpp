@@ -6,8 +6,6 @@
 CONST CHAR* string[] = { "This", "is", "my", "first", "List", "Box", "1024", "256" };
 
 BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK DlgProc1(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShou)
 {
@@ -33,6 +31,23 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
+		case IDADD_BUTTON:
+		{
+			DialogBoxParam(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG2), hwnd, DlgProc, 0);
+		}
+		break;
+		case IDOK_INPUT:
+		{
+			CONST INT SIZE = 256;
+			CHAR sz_buffer[SIZE] = {};
+			HWND hEdit = GetDlgItem(hwnd, IDC_EDIT1);
+			SendMessage(hEdit, WM_GETTEXT, SIZE, (LPARAM)sz_buffer);
+			HWND parent = GetParent(hwnd);
+			HWND hList1 = GetDlgItem(parent, IDC_LIST1);
+			SendMessage(hList1, LB_ADDSTRING, 0, (LPARAM)sz_buffer);
+			EndDialog(hwnd, 0);
+		}
+		break;
 		case IDOK:
 			{
 				CONST INT SIZE = 256;
@@ -44,13 +59,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				sprintf(sz_msg, "You take %d, number %s", i, sz_buffer);
 				MessageBox(hwnd, sz_msg, "Info", MB_OK | MB_ICONINFORMATION);
 			}
-			break;
-		case IDADD_BUTTON:
-			{
-			DialogBoxParam(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG2), hwnd, DlgProc1, 0);		
-					
-			}			
-			break;
+			break;		
 		case IDDELETE:
 			{
 				CONST INT SIZE = 256;
@@ -60,7 +69,6 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				SendMessage(hListBox, LB_DELETESTRING, i, 0);				
 			}
 			break;
-
 		case IDCANCEL:EndDialog(hwnd, 0); break;
 		}
 		break;
@@ -68,35 +76,4 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 	return FALSE;
 }
-BOOL CALLBACK DlgProc1(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-	switch (uMsg)
-	{
-	case WM_INITDIALOG:
-		{
-		}
-		break;
-	case WM_COMMAND:
-		switch (LOWORD(wParam))
-		{
-		case IDOK_INPUT:
-			{
-			HWND hEditBox = GetDlgItem(hwnd, IDC_EDIT1);
-			CONST INT SIZE = 256;
-			CHAR sz_buffer[SIZE] = {};
-			SendMessage(hEditBox, WM_GETTEXT, SIZE, (LPARAM)sz_buffer);
-			HWND hParent = GetParent(hwnd);
-			HWND hList = GetDlgItem(hParent, IDC_LIST1);
-			if(strlen(sz_buffer))
-				SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)sz_buffer);
-			EndDialog(hwnd, 0);		
-			}
-			break;
-		case IDCANCEL_INPUT:EndDialog(hwnd, 0); break;
-		}		
-		break;
-	case WM_CLOSE:EndDialog(hwnd, 0);
-	}
 
-	return FALSE;
-}
